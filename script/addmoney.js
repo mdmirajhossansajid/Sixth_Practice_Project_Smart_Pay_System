@@ -19,7 +19,16 @@ document.getElementById("addMoney-btn").addEventListener("click",function(){
     {
         alert(`Add Money SuccessFull from ${bankAccount} at ${new Date()}`)
         setBalance(newbalance);
+        const history=document.getElementById("history-container");
+        const newHistory=document.createElement("div");
+        newHistory.innerHTML=
+        `<div class="transaction-card p-5 bg-base-100">
+            Add Money SuccessFull from ${bankAccount},accno ${accno} at ${new Date()}
+            </div>`;
+        history.append(newHistory);
     }else{
         alert("Invalid Password");
     }
+
+
 })

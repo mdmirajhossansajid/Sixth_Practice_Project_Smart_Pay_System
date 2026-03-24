@@ -24,13 +24,15 @@ function showAll(id){
     const sendmoney=document.getElementById("sendmoney");
     const getbonus=document.getElementById("getbonus");
     const paybill=document.getElementById("paybill");
+    const history=document.getElementById("history");
 
     addmoney.classList.add("hidden");
     cashout.classList.add("hidden");
     sendmoney.classList.add("hidden");
     getbonus.classList.add("hidden");
     paybill.classList.add("hidden");
-    
+    history.classList.add("hidden");
+
     const selected=document.getElementById(id);
     selected.classList.remove("hidden");
 }

@@ -19,8 +19,15 @@ document.getElementById("cashout-btn").addEventListener("click",function(){
     const pin=getValueFromInput("cashout-pin")
     if(pin==="1234")
        {
-         alert("Log in Successfull");
+        alert(`Cash Out SuccessFull to ${cashOutNumber} at ${new Date()}`)
         setBalance(newBalance);
+        const history=document.getElementById("history-container");
+        const newHistory=document.createElement("div");
+        newHistory.innerHTML=
+        `<div class="transaction-card p-5 bg-base-100">
+            Add Money SuccessFull from ${cashOutNumber},cashoutAmount ${cashOutAmount} at ${new Date()}
+            </div>`;
+        history.append(newHistory);
          
 
        }

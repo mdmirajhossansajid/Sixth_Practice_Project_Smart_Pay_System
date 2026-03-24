@@ -21,11 +21,9 @@ A simple and responsive digital wallet web application inspired by bKash/Nagad.
 - Real-time balance update
 - Dynamic transaction system
 
-## 📸 Screenshots
-(Add screenshots here)
 
 ## 🔗 Live Demo
-(Add live link if deployed)
+https://pocketpay-app.netlify.app/
 
 ---
 👨‍💻 Developed by Md Miraj Hossan Sajid

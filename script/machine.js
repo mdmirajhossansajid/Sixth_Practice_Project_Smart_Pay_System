@@ -1,38 +1,94 @@
-// machine Input Value
-function getValueFromInput(id){
-    const input=document.getElementById(id);
-    const value=input.value;
-    console.log(id,value);
-    return value;
-}
-// machine Element Value
-function getBalance(){
-    const balanceElement=document.getElementById("balance");
-    const balance=balanceElement.innerText;
-    console.log("current balance",Number(balance));
-    return Number(balance);
-}
-// set value
-function setBalance(value){
-    const balanceElement=document.getElementById("balance");
-    balanceElement.innerText=value;
+// protect page
+if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "index.html";
 }
 
-function showAll(id){
-    const addmoney=document.getElementById("add-money");
-    const cashout=document.getElementById("cashout");
-    const sendmoney=document.getElementById("sendmoney");
-    const getbonus=document.getElementById("getbonus");
-    const paybill=document.getElementById("paybill");
-    const history=document.getElementById("history");
+// input value
+function getValueFromInput(id) {
+    return document.getElementById(id).value;
+}
 
-    addmoney.classList.add("hidden");
-    cashout.classList.add("hidden");
-    sendmoney.classList.add("hidden");
-    getbonus.classList.add("hidden");
-    paybill.classList.add("hidden");
-    history.classList.add("hidden");
+// balance
+function getBalance() {
+    return Number(localStorage.getItem("balance")) || 0;
+}
 
-    const selected=document.getElementById(id);
-    selected.classList.remove("hidden");
+function setBalance(value) {
+    localStorage.setItem("balance", value);
+    document.getElementById("balance").innerText = value;
+}
+
+// section show
+function showAll(id) {
+    const sections = ["add-money", "cashout", "sendmoney", "getbonus", "paybill", "history"];
+
+    sections.forEach(sec => {
+        document.getElementById(sec).classList.add("hidden");
+    });
+
+    document.getElementById(id).classList.remove("hidden");
+}
+
+// logout
+function logout() {
+    localStorage.removeItem("isLoggedIn");
+    window.location.href = "index.html";
+}
+
+// history system
+function addHistory(message) {
+    const data = JSON.parse(localStorage.getItem("history")) || [];
+    data.unshift(message);
+    localStorage.setItem("history", JSON.stringify(data));
+    renderHistory();
+}
+
+function renderHistory() {
+    const container = document.getElementById("history-container");
+    container.innerHTML = "";
+
+    const data = JSON.parse(localStorage.getItem("history")) || [];
+
+    data.forEach(item => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+        <div class="transaction-card p-5 bg-base-100 rounded-lg shadow">
+            ${item}
+        </div>`;
+        container.appendChild(div);
+    });
+}
+
+// load on start
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("balance").innerText = getBalance();
+    renderHistory();
+    if (localStorage.getItem("darkMode") === "true") {
+    document.body.classList.add("bg-black", "text-white");
+}
+});
+
+function filterHistory(type) {
+    const data = JSON.parse(localStorage.getItem("history")) || [];
+
+    const container = document.getElementById("history-container");
+    container.innerHTML = "";
+
+    let filtered = data;
+
+    if (type !== "all") {
+        filtered = data.filter(item => item.includes(type));
+    }
+
+    filtered.forEach(item => {
+        const div = document.createElement("div");
+
+        div.innerHTML = `
+        <div class="transaction-card p-5 bg-base-100 rounded-lg shadow">
+            ${item}
+        </div>
+        `;
+
+        container.appendChild(div);
+    });
 }

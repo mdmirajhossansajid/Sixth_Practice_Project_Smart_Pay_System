@@ -1,19 +1,23 @@
-document.getElementById("login-btn").addEventListener("click",function(){
-    const numberInput=document.getElementById("input-number")
-    const contactNumber=numberInput.value;
-    console.log(contactNumber);
+document.getElementById("login-btn").addEventListener("click", function () {
 
-    const numberPin=document.getElementById("input-pin")
-    const pin=numberPin.value;
-    console.log(pin);
+    const number = document.getElementById("input-number").value;
+    const pin = document.getElementById("input-pin").value;
 
-    if(contactNumber=="01402384675" && pin=="1234")
-    {
-        alert("Log in successFull");
-        window.location.assign("/home.html")
+    if (number.length !== 11) {
+        alert("Invalid Number");
+        return;
     }
 
-    else
-        alert("Log in failed");
+    if (pin !== "1234") {
+        alert("Invalid PIN");
+        return;
+    }
 
-})
+    localStorage.setItem("isLoggedIn", "true");
+
+    if (!localStorage.getItem("balance")) {
+        localStorage.setItem("balance", "45000");
+    }
+
+    window.location.href = "home.html";
+});

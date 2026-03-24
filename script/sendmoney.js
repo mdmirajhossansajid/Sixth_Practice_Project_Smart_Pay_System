@@ -1,29 +1,35 @@
-document.getElementById("sendmoney-btn").addEventListener("click",function(){
-    const sendMoneyNumber=getValueFromInput("sendmoney-number");
-    if(sendMoneyNumber.length!=11)
-    {
-        alert("Invalid Number")
+document.getElementById("sendmoney-btn").addEventListener("click", function () {
+
+    const number = getValueFromInput("sendmoney-number");
+    if (number.length != 11) {
+        alert("Invalid Number");
         return;
     }
-    const amount=getValueFromInput("sendmoney-amount");
-    const currentBalance=getBalance();
-    const newBalance=currentBalance-Number(amount);
-    const pin=getValueFromInput("sendmoney-pin");
-    if(pin=="1234")
-    {
-        alert(`Send Money SuccessFull from ${sendMoneyNumber} at ${new Date()}`)
-        setBalance(newbalance);
-        const history=document.getElementById("history-container");
-        const newHistory=document.createElement("div");
-        newHistory.innerHTML=
-        `<div class="transaction-card p-5 bg-base-100">
-            Add Money SuccessFull from ${sendMoneyNumber} at ${new Date()}
-            </div>`;
-        history.append(newHistory);
+
+    const amount = Number(getValueFromInput("sendmoney-amount"));
+    if (isNaN(amount) || amount <= 0) {
+        alert("Invalid Amount");
+        return;
     }
-    else
-    {
+
+    const newBalance = getBalance() - amount;
+
+    if (newBalance < 0) {
+        alert("Insufficient Balance");
+        return;
+    }
+
+    const pin = getValueFromInput("sendmoney-pin");
+
+    if (pin === "1234") {
+
+        const time = new Date().toLocaleString();
+
+        setBalance(newBalance);
+
+        addHistory(`Send Money: ${amount} BDT to ${number} at ${time}`);
+
+    } else {
         alert("Invalid PIN");
-        return;
     }
-})
+});

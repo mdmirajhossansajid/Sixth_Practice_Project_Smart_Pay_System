@@ -1,34 +1,41 @@
-document.getElementById("paybill-btn").addEventListener("click",function(){
-    const bankAccount=getValueFromInput("paybill-bank");
-    if(bankAccount=="Select Bank")
-    {
-        alert("Please Select A bank")
+document.getElementById("paybill-btn").addEventListener("click", function () {
+
+    const bank = getValueFromInput("paybill-bank");
+    if (bank == "Select Bank") {
+        alert("Select Bank");
         return;
     }
-    const accNumber=getValueFromInput("paybill-number");
-    if(accNumber.length!=11)
-    {
-        alert("Please Select  correct Number")
+
+    const number = getValueFromInput("paybill-number");
+    if (number.length != 11) {
+        alert("Invalid Number");
         return;
     }
-    const amount=getValueFromInput("paybill-amount");
-    const currentBalance=getBalance();
-    const newBalance=currentBalance-Number(amount);
-     const pin=getValueFromInput("paybill-pin");
-     if(pin=="1234")
-     {
-         alert(`Pay Bill SuccessFull from ${bankAccount} at ${new Date()}`)
+
+    const amount = Number(getValueFromInput("paybill-amount"));
+    if (isNaN(amount) || amount <= 0) {
+        alert("Invalid Amount");
+        return;
+    }
+
+    const newBalance = getBalance() - amount;
+
+    if (newBalance < 0) {
+        alert("Insufficient Balance");
+        return;
+    }
+
+    const pin = getValueFromInput("paybill-pin");
+
+    if (pin === "1234") {
+
+        const time = new Date().toLocaleString();
+
         setBalance(newBalance);
-        const history=document.getElementById("history-container");
-        const newHistory=document.createElement("div");
-        newHistory.innerHTML=
-        `<div class="transaction-card p-5 bg-base-100">
-            Add Money SuccessFull from ${bankAccount},accNumber ${accNumber} at ${new Date()}
-            </div>`;
-        history.append(newHistory);
-     } else
-     {
+
+        addHistory(`Pay Bill: ${amount} BDT via ${bank} (${number}) at ${time}`);
+
+    } else {
         alert("Invalid PIN");
-        return;
-     }
-})
+    }
+});

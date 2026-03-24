@@ -193,6 +193,14 @@
     </section>
     <section id="history" class="w-11/12 mx-auto py-5 hidden" >
         <h2 class="text-xl font-bold ">Transactions</h2>
+        <div class="flex gap-2 my-3">
+            <button onclick="filterHistory('all')" class="btn btn-sm">All</button>
+            <button onclick="filterHistory('Add')" class="btn btn-sm">Add</button>
+            <button onclick="filterHistory('Send')" class="btn btn-sm">Send</button>
+            <button onclick="filterHistory('Cash')" class="btn btn-sm">Cashout</button>
+            <button onclick="filterHistory('Pay')" class="btn btn-sm">Pay Bill</button>
+            <button onclick="filterHistory('Bonus')" class="btn btn-sm">Bonus</button>
+        </div>
         <div class=" space-y-5" id="history-container">
         </div>
 
